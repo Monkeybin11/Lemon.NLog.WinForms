@@ -8,28 +8,28 @@ namespace Lemon.NLog.WinForms
     [Target("TextBox")]
     public class TextBoxTarget : TargetWithContext
     {
-        public TextBox TextBox { get; private set; }
+        public TextBox TargetTextBox { get; private set; }
 
         public TextBoxTarget(TextBox textBox) : base()
         {
-            TextBox = textBox;
+            TargetTextBox = textBox;
         }
 
         protected override void Write(LogEventInfo LogEvent)
         {
-            if (!TextBox.IsHandleCreated)
+            if (!TargetTextBox.IsHandleCreated)
             {
-                if (TextBox.InvokeRequired)
+                if (TargetTextBox.InvokeRequired)
                 {
-                    TextBox.Invoke(new Action(() => { IntPtr pointer = TextBox.Handle; }));
+                    TargetTextBox.Invoke(new Action(() => { IntPtr pointer = TargetTextBox.Handle; }));
                 }
                 else
                 {
-                    IntPtr pointer = TextBox.Handle;
+                    IntPtr pointer = TargetTextBox.Handle;
                 }
             }
 
-            TextBox.Invoke(new Action(() => TextBox.AppendText(Layout.Render(LogEvent) + Environment.NewLine)));
+            TargetTextBox.Invoke(new Action(() => TargetTextBox.AppendText(Layout.Render(LogEvent) + Environment.NewLine)));
         }
     }
 }
