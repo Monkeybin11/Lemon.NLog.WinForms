@@ -21,6 +21,11 @@ namespace Lemon.NLog.WinForms
         /// </summary>
         [DefaultValue(true)]
         public bool AddNewLine { get; set; }
+        /// <summary>
+        /// If the text should be appended instead of replaced.
+        /// </summary>
+        [DefaultValue(true)]
+        public bool Append { get; set; }
 
         public TextBoxTarget(TextBox textBox) : base()
         {
@@ -37,23 +42,46 @@ namespace Lemon.NLog.WinForms
                 text += Environment.NewLine;
             }
 
-            // If a handle has not been created for this TextBox
-            if (!TargetTextBox.IsHandleCreated)
+            // If we need to invoke
+            if (TargetTextBox.InvokeRequired)
             {
-                // Get the pointer/handle of the TextBox (is silently created if not)
-                // And only call Invoke when we are not in the UI Thread (speed!)
-                if (TargetTextBox.InvokeRequired)
+                // If a handle has not been created for this TextBox
+                if (!TargetTextBox.IsHandleCreated)
                 {
-                    TargetTextBox.Invoke(new Action(() => { IntPtr pointer = TargetTextBox.Handle; }));
+                    // Get the pointer/handle of the TextBox (is silently created if not)
+                    TargetTextBox.Invoke(new Action(() => { _ = TargetTextBox.Handle; }));
                 }
+
+                // If we need to append, use AppendText
+                if (Append)
+                {
+                    TargetTextBox.Invoke(new Action(() => TargetTextBox.AppendText(text)));
+                }
+                // Otherwise, replace the text
                 else
                 {
-                    IntPtr pointer = TargetTextBox.Handle;
+                    TargetTextBox.Invoke(new Action(() => TargetTextBox.Text = text));
                 }
             }
-
-            // Then, just go ahead and append the message
-            TargetTextBox.Invoke(new Action(() => TargetTextBox.AppendText(text)));
+            // Otherwise, do the same things without invoking
+            else
+            {
+                if (!TargetTextBox.IsHandleCreated)
+                {
+                    _ = TargetTextBox.Handle;
+                }
+                
+                // If we need to append, use AppendText
+                if (Append)
+                {
+                    TargetTextBox.AppendText(text);
+                }
+                // Otherwise, replace the text
+                else
+                {
+                    TargetTextBox.Text = text;
+                }
+            }
         }
     }
 }
