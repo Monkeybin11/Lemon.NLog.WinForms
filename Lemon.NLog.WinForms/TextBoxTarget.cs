@@ -8,7 +8,7 @@ namespace Lemon.NLog.WinForms
     [Target("TextBox")]
     public class TextBoxTarget : TargetWithContext
     {
-        public TextBox TextBox { get; }
+        public TextBox TextBox { get; private set; }
 
         public TextBoxTarget(TextBox textBox) : base()
         {
