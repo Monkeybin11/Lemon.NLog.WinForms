@@ -1,6 +1,7 @@
 ﻿using NLog;
 using NLog.Targets;
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Lemon.NLog.WinForms
@@ -15,6 +16,11 @@ namespace Lemon.NLog.WinForms
         /// The TextBox control that will be used for this
         /// </summary>
         public TextBox TargetTextBox { get; private set; }
+        /// <summary>
+        /// If a new line should be added at the end of the text.
+        /// </summary>
+        [DefaultValue(true)]
+        public bool AddNewLine { get; set; }
 
         public TextBoxTarget(TextBox textBox) : base()
         {
@@ -23,6 +29,14 @@ namespace Lemon.NLog.WinForms
 
         protected override void Write(LogEventInfo LogEvent)
         {
+            // Start by formatting the text that we need
+            string text = Layout.Render(LogEvent);
+            // If we need to add a new line, do it
+            if (AddNewLine)
+            {
+                text += Environment.NewLine;
+            }
+
             // If a handle has not been created for this TextBox
             if (!TargetTextBox.IsHandleCreated)
             {
@@ -39,7 +53,7 @@ namespace Lemon.NLog.WinForms
             }
 
             // Then, just go ahead and append the message
-            TargetTextBox.Invoke(new Action(() => TargetTextBox.AppendText(Layout.Render(LogEvent) + Environment.NewLine)));
+            TargetTextBox.Invoke(new Action(() => TargetTextBox.AppendText(text)));
         }
     }
 }
