@@ -1,0 +1,39 @@
+version: "1.0.0.{build}"
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: "{version}"
+  package_version: "{version}"
+  assembly_version: "{version}"
+  file_version: "{version}"
+  informational_version: "{version}"
+
+init:
+  - ps: if ($env:APPVEYOR_REPO_TAG -eq "true") { Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))" }
+
+install:
+  - git submodule update --init --recursive
+
+build_script:
+  - msbuild %APPVEYOR_PROJECT_NAME%.sln /t:Build /p:Configuration=Release
+
+artifacts:
+  - path: '**\*.nupkg'
+
+deploy:
+  - provider: GitHub
+    release: v$(APPVEYOR_BUILD_VERSION)
+    auth_token:
+      secure: "DkvKC8KRj8AipGu/oWW/J2e6jMWt2xXQfKU7oefFMsp0ZMfzz+OR9Y9XpML+ZmG4"
+    artifact: '**\*.nupkg'
+    on:
+        branch: master
+        appveyor_repo_tag: true
+  - provider: NuGet
+    api_key:
+      secure: "OnIcXWdigvRyD612RhqOBVTxE4eBtTLFjCR0rzmhbP7zz4q5uJca0TGsONPlJnoA"
+    artifact: '**\*.nupkg'
+    on:
+        branch: master
+        appveyor_repo_tag: true
