@@ -7,7 +7,7 @@ The NLog Targets available are:
 * `Lemon.NLog.WinForms.TextBoxTarget` for `System.Windows.Forms.TextBox`
 * `Lemon.NLog.WinForms.ToolStripStatusLabelTarget` for `System.Windows.Forms.ToolStripStatusLabel`
 
-All of the targets with the esception of `TextBoxTarget` have no settings that can be changed.
+All of the targets with the exception of `TextBoxTarget` have no settings that can be changed.
 
 On `TextBoxTarget`, you can change the following properties:
 
