@@ -1,7 +1,6 @@
 ﻿using NLog;
 using NLog.Targets;
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Lemon.NLog.WinForms
@@ -19,13 +18,11 @@ namespace Lemon.NLog.WinForms
         /// <summary>
         /// If a new line should be added at the end of the text.
         /// </summary>
-        [DefaultValue(true)]
-        public bool AddNewLine { get; set; }
+        public bool AddNewLine { get; set; } = true;
         /// <summary>
         /// If the text should be appended instead of replaced.
         /// </summary>
-        [DefaultValue(true)]
-        public bool Append { get; set; }
+        public bool Append { get; set; } = true;
 
         public TextBoxTarget(TextBox textBox) : base()
         {
