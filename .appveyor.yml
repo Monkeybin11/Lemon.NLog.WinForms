@@ -15,6 +15,7 @@ init:
 
 install:
   - git submodule update --init --recursive
+  - nuget restore %APPVEYOR_PROJECT_NAME%.sln
 
 build_script:
   - msbuild %APPVEYOR_PROJECT_NAME%.sln /t:Build /p:Configuration=Release
