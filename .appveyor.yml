@@ -24,14 +24,6 @@ artifacts:
   - path: '**\*.nupkg'
 
 deploy:
-  - provider: GitHub
-    release: v$(APPVEYOR_BUILD_VERSION)
-    auth_token:
-      secure: "DkvKC8KRj8AipGu/oWW/J2e6jMWt2xXQfKU7oefFMsp0ZMfzz+OR9Y9XpML+ZmG4"
-    artifact: '**\*.nupkg'
-    on:
-        branch: master
-        appveyor_repo_tag: true
   - provider: NuGet
     api_key:
       secure: "OnIcXWdigvRyD612RhqOBVTxE4eBtTLFjCR0rzmhbP7zz4q5uJca0TGsONPlJnoA"
