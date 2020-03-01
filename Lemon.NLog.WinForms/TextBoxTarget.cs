@@ -14,7 +14,7 @@ namespace Lemon.NLog.WinForms
         /// <summary>
         /// The TextBox control that will be used for this
         /// </summary>
-        public TextBox TargetTextBox { get; private set; }
+        public TextBox TargetTextBox { get; }
         /// <summary>
         /// If a new line should be added at the end of the text.
         /// </summary>
