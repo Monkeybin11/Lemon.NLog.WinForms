@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>net35</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>1.0</Version>
+    <Authors>Hannele "Lemon" Ruiz</Authors>
+    <Company>Hannele "Lemon" Ruiz</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/justalemon/Lemon.NLog.WinForms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/justalemon/Lemon.NLog.WinForms.git</RepositoryUrl>
+    <PackageTags>nlog winforms targets</PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <Description>Additional Targets for logging messages into System.Windows.Forms controls with NLog</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
